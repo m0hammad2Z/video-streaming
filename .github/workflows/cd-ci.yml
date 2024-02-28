@@ -20,8 +20,43 @@ jobs:
 
       - name: Build with Maven
         run: |
-          cd Authentication # Change directory to service location
+          cd Authentication
           mvn clean install
+
+    # Build FileSystem service (Spring)
+  build-filesystem:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Build with Maven
+        run: |
+          cd FileSystem
+          mvn clean install
+
+    # Build Upload service (Spring)
+  build-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Build with Maven
+        run: |
+          cd UploadVideo
+          mvn clean install
+  
 
   # Build Node.js service
   build-node:
@@ -35,10 +70,12 @@ jobs:
           node-version: '14'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd streaming_app
+          npm install
+          npm install
 
-      - name: Build
-        run: npm run build
+
 
   # Deploy to Docker Hub
   deploy-docker:
