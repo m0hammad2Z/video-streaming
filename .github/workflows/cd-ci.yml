@@ -79,7 +79,7 @@ jobs:
 
   # Deploy to Docker Hub
   deploy-docker:
-    needs: [build-authentication, build-node]  # Wait for both builds to finish
+    needs: [build-authentication, build-filesystem, build-upload, build-node]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
