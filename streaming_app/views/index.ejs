@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Videos</title>
+</head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        h1{
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        div {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        video {
+            width: 450px;
+            height: auto;
+        }
+    </style>
+
+<body>
+    <h1>Streaming</h1>
+
+    <a href="/logout">Logout</a>
+
+    <div class="container">
+        <% videos.forEach(function(video) { %>
+            <div>
+                <h2><%= video.title %></h2>
+                <video src="videos/<%= video.url %>" controls></video>
+            </div>
+        <% }); %>
+    </div>
+</body>
+</html>

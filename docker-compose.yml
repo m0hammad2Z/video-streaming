@@ -1,0 +1,85 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: video_streaming
+    ports:
+      - "3307:3306"
+    restart: always
+    volumes:
+      - db_data:/var/lib/mysql
+
+  upload-video:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_DIR: ./UploadVideo
+    ports:
+      - "8080:8080"
+    depends_on:
+      - file-system
+      - authentication
+      - mysql
+    environment:
+      - spring.datasource.url=jdbc:mysql://mysql:3306/video_streaming
+      - spring.datasource.username=root
+      - spring.datasource.password=12345678
+      - service.auth.url=http://authentication:8081
+    command: ["./wait.sh", "mysql", "3306", "--", "java", "-jar", "/app.jar"]
+
+  authentication:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_DIR: ./Authentication
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+    environment:
+      - spring.datasource.url=jdbc:mysql://mysql:3306/video_streaming
+      - spring.datasource.username=root
+      - spring.datasource.password=12345678
+    command: ["./wait.sh", "mysql", "3306", "--", "java", "-jar", "/app.jar"]
+
+  file-system:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_DIR: ./FileSystem
+    volumes:
+      - video_storage:/videos
+    ports:
+      - "8082:8082"
+    environment:
+      - service.upload.url=http://upload-video:8080
+    command: ["java", "-jar", "/app.jar"]
+
+  video-streaming:
+    build: ./streaming_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+      - file-system
+      - authentication
+      - upload-video
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASSWORD=12345678
+      - DB_NAME=video_streaming
+      - DB_PORT=3306
+      - AUTH_SERVICE_URL=http://authentication:8081
+    command: ["./wait.sh", "mysql", "3306", "--", "node", "app.js"]
+    volumes:
+      - video_storage:/app/videos
+      
+volumes:
+  db_data:
+  video_storage:

@@ -1,0 +1,4 @@
+.mvn/
+target/
+.dockerignore
+node_modules

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Boot Web App</title>
+</head>
+<body>
+<h1>Upload Video</h1>
+
+<form action="http://localhost:8082/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="video" />
+    <input type="hidden" name="token" th:value="${session.token}" />
+    <input type="submit" value="Upload" />
+</form>
+</body>
+</html>
