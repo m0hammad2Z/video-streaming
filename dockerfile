@@ -5,7 +5,7 @@ COPY ${SERVICE_DIR}/pom.xml .
 COPY ${SERVICE_DIR}/src ./src
 RUN mvn clean package
 
-FROM openjdk:11-jre-slim
+FROM openjdk:17-slim
 COPY --from=build /app/target/*.jar /app.jar
 
 COPY wait.sh .
