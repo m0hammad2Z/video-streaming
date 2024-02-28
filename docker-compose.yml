@@ -12,11 +12,7 @@ services:
       - db_data:/var/lib/mysql
 
   upload-video:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        SERVICE_DIR: ./UploadVideo
+    build: ./UploadVideo
     ports:
       - "8080:8080"
     depends_on:
@@ -31,11 +27,8 @@ services:
     command: ["./wait.sh", "mysql", "3306", "--", "java", "-jar", "/app.jar"]
 
   authentication:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        SERVICE_DIR: ./Authentication
+    build: ./Authentication
+
     ports:
       - "8081:8081"
     depends_on:
@@ -46,12 +39,9 @@ services:
       - spring.datasource.password=12345678
     command: ["./wait.sh", "mysql", "3306", "--", "java", "-jar", "/app.jar"]
 
+
   file-system:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        SERVICE_DIR: ./FileSystem
+    build: ./FileSystem
     volumes:
       - video_storage:/videos
     ports:
