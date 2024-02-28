@@ -23,7 +23,7 @@ jobs:
           cd Authentication
           mvn clean install
 
-    # Build FileSystem service (Spring)
+  # Build FileSystem service (Spring)
   build-filesystem:
     runs-on: ubuntu-latest
     steps:
@@ -40,7 +40,7 @@ jobs:
           cd FileSystem
           mvn clean install
 
-    # Build Upload service (Spring)
+  # Build Upload service (Spring)
   build-upload:
     runs-on: ubuntu-latest
     steps:
@@ -67,12 +67,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '20'
 
       - name: Install dependencies
         run: |
           cd streaming_app
-          npm install
           npm install
 
 
@@ -92,5 +91,18 @@ jobs:
 
       - name: Build and push images
         run: |
-          docker-compose build # Build all services
-          docker-compose push
+          cd Authentication
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/authentication-service .
+          docker push ${{ secrets.DOCKER_USERNAME }}/authentication-service
+
+          cd ../FileSystem
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/filesystem-service .
+          docker push ${{ secrets.DOCKER_USERNAME }}/filesystem-service
+
+          cd ../UploadVideo
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/upload-service .
+          docker push ${{ secrets.DOCKER_USERNAME }}/upload-service
+
+          cd ../streaming_app
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/node-service .
+          docker push ${{ secrets.DOCKER_USERNAME }}/node-service
