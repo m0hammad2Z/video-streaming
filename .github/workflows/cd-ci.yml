@@ -2,8 +2,8 @@ name: streaming CI/CD
 
 on:
   push:
-  branches:
-    - main
+    branches:
+      - main
 
 jobs:
   build-spring:
