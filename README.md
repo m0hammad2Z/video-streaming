@@ -1,7 +1,6 @@
 # Video Streaming System
 
-This project implements a containerized video streaming system using microservices and Docker for modularity, scalability, and efficient development.
-
+Containerized video streaming system, leveraging microservices and Docker for modularity, scalability, and efficient development.
 ## Features
 
 * User authentication for secure video upload and viewing
