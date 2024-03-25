@@ -1,15 +1,15 @@
-## Video Streaming System
+# Video Streaming System
 
 This project implements a containerized video streaming system using microservices and Docker for modularity, scalability, and efficient development.
 
-### Features
+## Features
 
 * User authentication for secure video upload and viewing
 * Video upload with format validation (MP4)
 * Video streaming for authenticated users
 * Database storage of video information
 
-### Architecture
+## Architecture
 
 The system is comprised of five microservices:
 
@@ -19,7 +19,7 @@ The system is comprised of five microservices:
 * **File System Service:** Provides functionality to write videos to persistent storage.
 * **MySQL DB Service:** Stores video information for efficient retrieval and management.
 
-### Technologies
+## Technologies
 
 * **Frontend:** Potentially a web framework like React or Angular (not specified in the report)
 * **Backend:**
@@ -31,7 +31,7 @@ The system is comprised of five microservices:
 * **Orchestration:** Docker Compose
 * **CI/CD:** GitHub Actions
 
-### Getting Started
+## Getting Started
 
 **Prerequisites:**
 
