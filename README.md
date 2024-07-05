@@ -20,7 +20,6 @@ The system is comprised of five microservices:
 
 ## Technologies
 
-* **Frontend:** Potentially a web framework like React or Angular (not specified in the report)
 * **Backend:**
     * Upload Video & File System Services: Spring Boot (Java)
     * Video Streaming Service: Node.js
